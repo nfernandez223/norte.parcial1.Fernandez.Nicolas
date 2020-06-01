@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Cosmos";
+}
+
+<h2>Gestión de Constelaciones</h2>
+<hr />
+<div>
+    <table border="0">
+        <tr>
+            <th>Siglo</th>
+            <td>
+                <input id="txtSiglo" type="text" placeholder="Ingrese el siglo" />
+            </td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>
+                <input id="txtNombre" type="text" placeholder="Ingrese el nombre" />
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input id="btnGuardar" type="button" value="Guardar" class="button-success color-success" />
+                <input id="btnListar" type="button" value="Listar Constelaciones" class="button-default color-default" />
+            </td>
+        </tr>
+    </table>
+</div>
+<hr />
+<div id="resultado">
+
+</div>
+
+@section scripts{
+    <script>
+
+        var constelaciones = new Array(); //LISTA DE CONSTELACIONES
+
+        function Constelacion() { //SE DELCARA EL OBJETO CONSTELACION
+
+            this.setSiglo = function (value) { this._siglo = value; }
+            this.getSiglo = function () { return this._siglo; }
+
+            this.setNombre = function (value) { this._nombre = value; }
+            this.getNombre = function () { return this._nombre; }
+        }
+
+        //Eventos de los botones
+
+        $("#btnGuardar").click(function () { //EVENTO GUARDAR CONSTELACION
+
+            var cons = new Constelacion();
+            cons.setSiglo($("#txtSiglo").val());
+            cons.setNombre($("#txtNombre").val());
+
+            constelaciones.push(cons); //AGREGA LA CONSTELACION A LA LISTA
+            $("#txtSiglo").val("");
+            $("#txtNombre").val("");
+        });
+
+        $("#btnListar").click(function () { //EVENTO DE LISTAR CONSTELACIONES
+
+            var ctl = $("#resultado");
+            ctl.html("");
+            $.each(constelaciones, function (i, e) {
+                ctl.append("Siglo: " + e.getSiglo() + " - " + "Nombre: " + e.getNombre() + "<br />");
+            });
+        });</script>
+
+}
