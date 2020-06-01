@@ -6,31 +6,35 @@
 <h2>Gestión de Constelaciones</h2>
 <hr />
 <div>
-    <table border="0">
-        <tr>
-            <th>Siglo</th>
-            <td>
-                <input id="txtSiglo" type="text" placeholder="Ingrese el siglo" />
-            </td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>
-                <input id="txtNombre" type="text" placeholder="Ingrese el nombre" />
-            </td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>
-                <input id="btnGuardar" type="button" value="Guardar" class="button-success color-success" />
-                <input id="btnListar" type="button" value="Listar Constelaciones" class="button-default color-default" />
-            </td>
-        </tr>
-    </table>
+    <form id="myform">
+        <table border="0">
+            <tr>
+                <th>Siglo</th>
+                <td>
+                    <input id="txtSiglo" type="text" placeholder="Ingrese el siglo" />
+                </td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>
+                    <input id="txtNombre" type="text" placeholder="Ingrese el nombre" />
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input id="btnGuardar" type="button" value="Guardar" class="button-default color-default" />
+                    <input id="btnListar" type="button" value="Listar Constelaciones" class="button-default color-default" />
+                </td>
+            </tr>
+        </table>
+      </form>
 </div>
 <hr />
 <div id="resultado">
+    <table id="tableconst">
 
+    </table>
 </div>
 
 @section scripts{
@@ -51,13 +55,17 @@
 
         $("#btnGuardar").click(function () { //EVENTO GUARDAR CONSTELACION
 
-            var cons = new Constelacion();
-            cons.setSiglo($("#txtSiglo").val());
-            cons.setNombre($("#txtNombre").val());
+            if ($("#txtSiglo").val() == "" || $("#txtNombre").val() == "") {
+                alert("Complete todos los campos");
+            } else {
+                var cons = new Constelacion();
+                cons.setSiglo($("#txtSiglo").val());
+                cons.setNombre($("#txtNombre").val());
 
-            constelaciones.push(cons); //AGREGA LA CONSTELACION A LA LISTA
-            $("#txtSiglo").val("");
-            $("#txtNombre").val("");
+                constelaciones.push(cons); //AGREGA LA CONSTELACION A LA LISTA
+                $("#txtSiglo").val("");
+                $("#txtNombre").val("");
+            }
         });
 
         $("#btnListar").click(function () { //EVENTO DE LISTAR CONSTELACIONES
@@ -65,8 +73,11 @@
             var ctl = $("#resultado");
             ctl.html("");
             $.each(constelaciones, function (i, e) {
-                ctl.append("Siglo: " + e.getSiglo() + " - " + "Nombre: " + e.getNombre() + "<br />");
+                ctl.append("Siglo: " + e.getSiglo() + " | " + "Nombre: " + e.getNombre() + "<br />");
             });
-        });</script>
+        });
+
+
+    </script>
 
 }
